@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="We present a unique solution to the semantic object rearrangement problem using Language-Guided Monte-Carlo Tree Search (LGMCTS) that simultaneously handles pose generation and action planning, outperforming methods like StructFormer and StructDiffusion, with results validated on simulations and real-world robot tests.">
+  <meta name="keywords" content="Task Planning, AI-Enabled Robotics, Manipulation Planning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LGMCTS: Language-Guided Monte-Carlo Tree Search for Executable Semantic Object Rearrangement </title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://github.com/changhaonan">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://ovsg-l.github.io">
+            OVSG
+          </a>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">LGMCTS: Language-Guided Monte-Carlo Tree Search for Executable Semantic Object Rearrangement </h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=fb-yr1YAAAAJ&hl=zh-CN">Haonan Chang</a>,</span>
+              <span class="author-block">
+                <a href="https://gaokai15.github.io/">Kai Gao</a>,</span>
+            <span class="author-block">
+              <a href="https://kowndinya2000.github.io">Kowndinya Boyalakuntla</a>,</span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/alex-lee-54a20421a/">Alex Lee</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://baichuan05.github.io/">Baichuan Huang</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://ericjing.com/">Eric Jing</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.cs.rutgers.edu/people/directory.php?type=grad&netid=hu33">Harish Udhayakumar</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://arc-l.github.io/group.html">Jingjin Yu</a>,
+            </span>
+            <span class="author-block">
+              <a href="http://www.abdeslam.net/">Abdeslam Boularias</a>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Rutgers University</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2309.15821"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/changhaonan/LGMCTS"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <!-- FIXME: Add link to the dataset -->
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-dataset"></i>
+                  </span>
+                  <span>Data(Coming Soon!)</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="title is-3">System Run-through</h2>
+      <video id="teaser" autoplay muted loop playsinline height="100%" style="display: block; margin: auto; background-position: center;">
+        <source src="./static/videos/lgmcts.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-steve">
+          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/1-Set all phones into a line.mp4"
+                    type="video/mp4">
+          </video>
+          <!-- #d9ead3 green -->
+          <!-- #c9daf8 blue -->
+          <h2 class="title is-3" style="font-size: 1.2rem;text-align: center;font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;background-color: #f4cccc;color: black;">
+            Set all phones into a line
+          <br>
+          <span style="font-size: 0.75rem;color: grey;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Starting with an infeasible configuration</span>
+          </h2>
+        </div>
+        <div class="item item-chair-tp">
+          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/2-Formulate all yellow objects into a line.mp4"
+                    type="video/mp4">
+          </video>
+          <h2 class="title is-3" style="font-size: 1.2rem;text-align: center;font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;background-color: #c9daf8;color: black;">
+            Formulate all yellow objects into a line
+            <br>
+            <span style="font-size: 0.75rem;color: grey;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Collision-free and semantically correct goal positions</span>
+          </h2>
+        </div>
+        <div class="item item-shiba">
+          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/3-Move bottles into a line; and formulate all phones into another line.mp4"
+                    type="video/mp4">
+          </video>
+          <h2 class="title is-3" style="font-size: 1.2rem;text-align: center;font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;background-color: #d9ead3;color: black;">
+            Move bottles into a line; and formulate all phones into another line
+            <br>
+            <span style="font-size: 0.75rem;color: grey;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Multi-pattern rearrangement (Line + Line)</span>
+          </h2>
+        </div>
+        <div class="item item-fullbody">
+          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/4-Move all blocks into a circle; while put the white bottle in front of one block.mp4"
+                    type="video/mp4">
+          </video>
+          <h2 class="title is-3" style="font-size: 1.2rem;text-align: center;font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;background-color: #d9ead3;color: black;">
+            Move all blocks into a circle; while put the white bottle in front of one block
+            <br>
+            <span style="font-size: 0.75rem;color: grey;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Multi-pattern rearrangement (Circle + Spatial)</span>
+          </h2>
+        </div>
+        <div class="item item-blueshirt">
+          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/5-Put all boxes into a rectangle; and move the white bottle to the left of one box.mp4"
+                    type="video/mp4">
+          </video>
+          <h2 class="title is-3" style="font-size: 1.2rem;text-align: center;font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;background-color: #d9ead3;color: black;">
+            Put all boxes into a rectangle; and move the white bottle to the left of one box
+            <br>
+            <span style="font-size: 0.75rem;color: grey;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Multi-pattern rearrangement (Rectangle + Spatial)</span>
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We introduce a novel approach to the executable semantic object rearrangement problem. 
+            In this challenge, a robot seeks to create an actionable plan that rearranges objects within a scene according to a pattern dictated by a natural language description. 
+          </p>
+          <p>
+            Unlike existing methods such as StructFormer and StructDiffusion, which tackle the issue in two steps by first generating poses and then leveraging a task planner for action plan 
+            formulation, our method concurrently addresses pose generation and action planning. We achieve this integration using a <span class="dovsg">Language-Guided Monte-Carlo Tree Search</span> (LGMCTS).  
+          </p>
+          <p>
+            Quantitative evaluations are provided on two simulation datasets, and complemented by qualitative tests with a real robot.  
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">
+          <span class="dovsg">Language Guided Monte Carlo Tree Search</span> (LGMCTS)
+        </h2>
+        <div class="content has-text-justified">
+          <p>
+            We introduce the LGMCTS technique, crafted for executable semantic object rearrangement. 
+            LGMCTS employs LLMs to process free-form language, perceiving object placements as probability distributions rather than fixed points.
+             The problem is viewed as sequential sampling, where language and the present scene influence each object's pose distribution. 
+             This method accommodates distracting objects, ensuring plans satisfy linguistic specifications while being executable.
+          </p>
+        <h3 class="title is-4">Key Contributions</h3>
+
+          <p>            
+            <span style="color: #EB5B67;font-weight: bolder;">1. </span>A novel technique that simultaneously tackles semantic rearrangement goal generation and action planning.
+            <br>
+            <span style="color: #EB5B67;font-weight: bolder;">2. </span> A distinctive method promoting zero-shot multi-pattern composition in semantic object rearrangement.
+            <br>
+            <span style="color: #EB5B67;font-weight: bolder;">3. </span> The establishment of a fresh benchmark specifically for executable semantic object rearrangement.
+            
+          </p>
+          <h3 class="title is-4">Distribution Generation</h3>
+          <img src="./static/images/prior.png">
+          <p style="color: grey;font-style: italic;font-weight: bold;">This illustrates the (x, y) prior for the 'line' pattern. Sequence from left to right represents stages K = 0 to K = 3. White stars indicate sampled poses. At K = 0, poses can be placed freely. At K = 1, poses are sampled outside a specified circle. For K ≥ 2, all poses align with the line formed by the initial two poses.</p>
+          <br>
+          <p>
+            
+            For each object, we compute a conditional distribution using two components: a pattern prior function and a boolean function indicating free space. 
+            The pattern prior function is selected from a database using Sentence-BERT embeddings of given language instructions, matching the closest predefined function. 
+            Within the LGMCTS context, patterns are described using parametric curves.
+            <br>
+            </p>
+            <p style="padding-left: 2rem !important;">
+              <h4 class="title is-4"  style="padding-left: 2rem !important;">About the sequential sampling process</h4>
+              <span style="color: #EB5B67;font-weight: bolder;padding-left: 2rem !important;">1. </span>When no objects are sampled, the first object can be placed randomly.
+              <br>
+              <span style="color: #EB5B67;font-weight: bolder;padding-left: 2rem !important;">2. </span>With one object sampled, the next must maintain a minimum distance from the first.
+              <br>
+              <span style="color: #EB5B67;font-weight: bolder;padding-left: 2rem !important;">3. </span>From the third object onwards, they are placed based on the parametric curve's gradient angle and some variance.
+              <br><br>
+              Patterns are categorized as <span style="color: #209cee;font-weight: bolder;">ordered</span> or <span style="color: #209cee;font-weight: bolder;">unordered</span> based on whether a specific sequence is required. 
+
+              The distribution generation process is illustrated with a <span style="color: #209cee;font-weight: bolder;">lines</span> pattern in the accompanying figure above.
+            </p>
+        </div>
+        
+
+        <br/>
+     
+      
+      </div>
+    </div>
+</div>
+</section>
+
+
+<section class="section" style="margin-top: -5rem;">
+  <div class="container  is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">
+          Results
+        <h3 class="title is-4">Demonstrations using a real UR5 robot</h3>
+        
+        <img src="./static/images/experiments.png" class="interpolation-image" alt="UR5 results">
+        <p>
+          The instructions for each of the five scenarios are: 
+          <br>
+          <span style="color: #EB5B67;font-weight: bolder;padding-left: 2rem !important;">(a) </span>Arrange all blocks in a circle and place the white bottle in front of a block.
+          <br>
+          <span style="color: #EB5B67;font-weight: bolder;padding-left: 2rem !important;">(b) </span>Position all boxes in a rectangle and situate the white bottle to the left of a box.
+          <br>
+          <span style="color: #EB5B67;font-weight: bolder;padding-left: 2rem !important;">(c) </span>Line up the bottles and arrange the phones in a separate line.
+          <br>
+          <span style="color: #EB5B67;font-weight: bolder;padding-left: 2rem !important;">(d) </span>Align all yellow objects in a straight line.
+          <br>
+          <span style="color: #EB5B67;font-weight: bolder;padding-left: 2rem !important;">(e) </span>Organize all phones in a line.
+          <br><br>
+          <span style="color: #209cee;font-weight: bolder;">Dotted lines</span> suggest shape patterns, while <span style="color: #209cee;font-weight: bolder;">red arrows</span> denote spatial directions <span style="color: #209cee;font-weight: bolder;">(e.g., left, right, front, back)</span>. 
+          These experiments validate LGMCTS's capability to interpret intricate linguistic commands and manage challenging initial setups and pattern combinations.
+
+        </p>
+        <br>
+        <h3 class="title is-4">Qualitative Comparison</h3>
+        <img src="./static/images/qua_compare.png" class="interpolation-image" alt="Qualitative">
+        <p style="font-weight: bold;color: grey;font-style: italic;">LGMCTS outperforms StructFormer and StructDiffusion by guaranteeing a collision-free goal arrangement in a qualitative comparison.</p>
+       
+      </div>
+    </div>
+</div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{chang2023lgmcts,
+      title={LGMCTS: Language-Guided Monte-Carlo Tree Search for Executable Semantic Object Rearrangement}, 
+      author={Haonan Chang and Kai Gao and Kowndinya Boyalakuntla and Alex Lee and Baichuan Huang and Harish Udhaya Kumar and Jinjin Yu and Abdeslam Boularias},
+      year={2023},
+      eprint={2309.15821},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO}
+      }</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+          <p>
+            Website template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a> made by the amazing <a href="https://keunhong.com/">Keunhong Park</a>. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
