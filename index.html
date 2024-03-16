@@ -83,9 +83,9 @@
             <span class="author-block">
               <a href="https://ericjing.com/">Eric Jing</a>,
             </span>
-            <span class="author-block">
+            <!-- <span class="author-block">
               <a href="https://www.cs.rutgers.edu/people/directory.php?type=grad&netid=hu33">Harish Udhayakumar</a>,
-            </span>
+            </span> -->
             <span class="author-block">
               <a href="https://arc-l.github.io/group.html">Jingjin Yu</a>,
             </span>
@@ -234,15 +234,16 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We introduce a novel approach to the executable semantic object rearrangement problem. 
-            In this challenge, a robot seeks to create an actionable plan that rearranges objects within a scene according to a pattern dictated by a natural language description. 
+            We present LGMCTS, a framework that uniquely combines language guidance with geometrically informed sampling distributions to effectively rearrange objects according to geometric patterns dictated by natural language descriptions.
+            <span class="dovsg">Language-Guided Monte-Carlo Tree Search</span> (LGMCTS) to create feasible action plans that ensure executable semantic object rearrangement.
           </p>
           <p>
-            Unlike existing methods such as StructFormer and StructDiffusion, which tackle the issue in two steps by first generating poses and then leveraging a task planner for action plan 
-            formulation, our method concurrently addresses pose generation and action planning. We achieve this integration using a <span class="dovsg">Language-Guided Monte-Carlo Tree Search</span> (LGMCTS).  
+            We present a comprehensive comparison with leading approaches that use language to generate goal rearrangements independently of actionable planning, including <a href="https://sites.google.com/view/structformer">Structformer</a>, <a href="https://structdiffusion.github.io/">StructDiffusion</a>, and <a href="https://code-as-policies.github.io/">Code as Policies</a>. 
+            We also present a new benchmark, the Executable Language Guided Rearrangement (ELGR) Bench, containing tasks involving intricate geometry. 
+            With the ELGR bench, we show limitations of task and motion planning (TAMP) solutions that are purely based on Large Language Models (LLM) such as <a href="https://code-as-policies.github.io/">Code as Policies</a> and <a href="https://progprompt.github.io/">Progprompt</a> on such tasks.
           </p>
           <p>
-            Quantitative evaluations are provided on two simulation datasets, and complemented by qualitative tests with a real robot.  
+            Our findings advocate for using LLMs to generate intermediary representations rather than direct action planning in geometrically complex rearrangement scenarios, aligning with perspectives from recent literature.
           </p>
         </div>
       </div>
